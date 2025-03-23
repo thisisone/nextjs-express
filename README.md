@@ -23,6 +23,7 @@ https://docs.unity3d.com/kr/2021.3/Manual/webgl-deploying.html
 로컬 테스트
 node index.js
 
+v1
 {
 "version": 2,
 "build*": [
@@ -32,6 +33,23 @@ node index.js
 }
 ],
 "rewrites*": [{ "source": "/(.*)", "destination": "/api" }],
+"routes": [
+{
+"src": "/(.*)",
+"dest": "server.js"
+}
+]
+}
+
+v2
+{
+"version": 2,
+"build*": [
+{
+"src": "server.js",
+"use": "@vercel/node"
+}
+],
 "routes": [
 {
 "src": "/(.*)",
