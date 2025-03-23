@@ -23,25 +23,18 @@ https://docs.unity3d.com/kr/2021.3/Manual/webgl-deploying.html
 로컬 테스트
 node index.js
 
-v1
-{
-"version": 2,
-"build*": [
-{
-"src": "build.js",
-"use": "@vercel/node"
-}
-],
-"rewrites*": [{ "source": "/(.*)", "destination": "/api" }],
-"routes": [
-{
-"src": "/(.*)",
-"dest": "server.js"
-}
-]
-}
+코드에 나오는 json
 
-v2
+```
+{
+	"version": 2,
+	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
+}
+```
+
+영상에 내오는 json
+
+```
 {
 "version": 2,
 "build*": [
@@ -57,3 +50,4 @@ v2
 }
 ]
 }
+```
