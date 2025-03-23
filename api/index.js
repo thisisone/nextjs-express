@@ -109,8 +109,8 @@ app.get("/z_web/**", (req, res) => {
 // public 파일을 직업 전달
 // app.use(express.static("public"));
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Example app listening on port ${PORT}`);
+// });
 
 module.exports = app;

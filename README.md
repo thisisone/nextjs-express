@@ -9,6 +9,9 @@ https://vercel.com/guides/using-express-with-vercel
 예제 소스
 https://github.com/vercel/examples/tree/main/solutions/express
 
+vercel 프로젝트
+https://vercel.com/lee-gun-ils-projects/nextjs-express
+
 유니티 webgl 압축
 https://docs.unity3d.com/kr/2021.3/Manual/webgl-deploying.html
 
@@ -16,3 +19,20 @@ https://docs.unity3d.com/kr/2021.3/Manual/webgl-deploying.html
 
 로컬 테스트
 node index.js
+
+{
+"version": 2,
+"build*": [
+{
+"src": "build.js",
+"use": "@vercel/node"
+}
+],
+"rewrites*": [{ "source": "/(.*)", "destination": "/api" }],
+"routes": [
+{
+"src": "/(.*)",
+"dest": "server.js"
+}
+]
+}
