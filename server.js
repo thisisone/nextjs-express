@@ -37,6 +37,12 @@ function path_split(text) {
   return arr;
 }
 
+let count = 0;
+app.get("/", (req, res) => {
+  count++;
+  res.send("hello " + count);
+});
+
 // http://localhost:3000/z_web/index.html
 app.get("/z_web/**", (req, res) => {
   var url = req.url;
