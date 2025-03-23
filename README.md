@@ -46,7 +46,7 @@ node index.js
 "routes": [
 {
 "src": "/(.*)",
-"dest": "server.js"
+"dest": "/"
 }
 ]
 }
