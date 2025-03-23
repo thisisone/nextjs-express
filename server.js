@@ -3,7 +3,8 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
-const PORT = 3000;
+// const PORT = 3000;
+const PORT = 8080;
 
 // 마지막이 cond 랑 같은지 비교
 function comp_last(text, cond) {

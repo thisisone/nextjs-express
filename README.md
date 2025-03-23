@@ -9,6 +9,9 @@ https://vercel.com/guides/using-express-with-vercel
 예제 소스
 https://github.com/vercel/examples/tree/main/solutions/express
 
+영상
+https://www.youtube.com/watch?v=ep5crSLD7y4
+
 vercel 프로젝트
 https://vercel.com/lee-gun-ils-projects/nextjs-express
 
