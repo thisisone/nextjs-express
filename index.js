@@ -35,8 +35,7 @@ function path_split(text) {
   return arr;
 }
 
-// http://localhost:3000/z_web/index.html
-app.get("/z_web/**", (req, res) => {
+app.get("/webgl/**", (req, res) => {
   var url = req.url;
   // console.log("url", url);
 
@@ -61,10 +60,10 @@ app.get("/z_web/**", (req, res) => {
   var arr = path_split(url);
   // console.log("arr", arr);
 
-  // z_web 뒷부분을 읽어 파일 경로를 많음
+  // webgl 뒷부분을 읽어 파일 경로를 많음
   var fpath = "";
   for (var i = 0; i < arr.length; i++) {
-    if (arr[i] != "z_web") continue;
+    if (arr[i] != "webgl") continue;
 
     for (; i < arr.length; i++) {
       fpath = path.join(fpath, arr[i]);
@@ -74,7 +73,9 @@ app.get("/z_web/**", (req, res) => {
 
   // 절대 경로 만들기기
   fpath = path.join(__dirname, "public", fpath);
-  console.log("file", comp, ctype, url);
+  if (comp) {
+    console.log("send gz", ctype, url);
+  }
 
   if (comp) {
     res.setHeader("Content-Encoding", "gzip");
@@ -104,25 +105,43 @@ app.get("/z_web/**", (req, res) => {
 });
 
 let count = 0;
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   count++;
-  res.send("hello=" + count + " url=" + req.url);
+  res.send(
+    `
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Unity WebGL compression demo</h1>
+        <p>
+            <a href="/webgl/index.html">
+                View
+            </a>
+        </p>
+        <p>
+            visit counter ${count}
+        </p>
+    </body>
+</html>
+    `
+  );
 });
-app.get("/**", (req, res) => {
+app.get("/api/**", (req, res) => {
   count++;
-  res.send("hello_2=" + count + " url=" + req.url);
+  res.send("api=" + count + " url=" + req.url);
 });
 
-// http://localhost:3000/z_web/index.html
-
-// public 파일을 직업 전달
+// public 파일을 단순 전달하는 방법
+// 이걸로는 unity webgl 압축을 사용할 수 없다.
 // app.use(express.static("public"));
 
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log("express listen");
   console.log("http://localhost:3000/");
-  console.log("http://localhost:3000/z_web/index.html");
+  console.log("http://localhost:3000/api/test");
+  console.log("http://localhost:3000/webgl/index.html");
 });
 
 module.exports = app;
