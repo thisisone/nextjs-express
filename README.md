@@ -45,6 +45,12 @@ node index.js
 ```
 {
   "version": 2,
+  "build": [
+    {
+      "src": "./index.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
@@ -52,4 +58,5 @@ node index.js
     }
   ]
 }
+
 ```
