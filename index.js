@@ -116,7 +116,9 @@ app.get("/**", (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log("express listen");
+  console.log("http://localhost:3000/");
+  console.log("http://localhost:3000/z_web/index.html");
 });
 
 module.exports = app;

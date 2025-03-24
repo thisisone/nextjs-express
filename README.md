@@ -27,27 +27,29 @@ node index.js
 
 ```
 {
-	"version": 2,
-	"rewrites": [{ "source": "/(.*)", "destination": "/" }]
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
 }
 ```
+
+이방법은 실패했음
+소스코드가 화면에 보임
 
 영상에 내오는 json
 
 ```
 {
-"version": 2,
-"build*": [
-{
-"src": "server.js",
-"use": "@vercel/node"
-}
-],
-"routes": [
-{
-"src": "/(.*)",
-"dest": "server.js"
-}
-]
+  "version": 2,
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
 }
 ```
