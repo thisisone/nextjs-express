@@ -3,7 +3,6 @@ const path = require("path");
 const fs = require("fs");
 
 const app = express();
-const PORT = 3000;
 
 // 마지막이 cond 랑 같은지 비교
 function comp_last(text, cond) {
@@ -104,13 +103,20 @@ app.get("/z_web/**", (req, res) => {
   fs.createReadStream(fpath).pipe(res);
 });
 
+let count = 0;
+app.get("/**", (req, res) => {
+  count++;
+  res.send("hello=" + count + " url=" + req.url);
+});
+
 // http://localhost:3000/z_web/index.html
 
 // public 파일을 직업 전달
 // app.use(express.static("public"));
 
-// app.listen(PORT, () => {
-//   console.log(`Example app listening on port ${PORT}`);
-// });
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
+});
 
 module.exports = app;

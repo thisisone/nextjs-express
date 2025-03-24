@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node build.js",
-    "start": "node server",
-    "serve": "node local"
+    "build": "echo ok",
+    "start": "node index",
+    "serve": "node index"
   },
   "keywords": [],
   "author": "",
