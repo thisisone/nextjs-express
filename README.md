@@ -58,5 +58,4 @@ node index.js
     }
   ]
 }
-
 ```
