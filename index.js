@@ -115,7 +115,7 @@ app.get("/", (_, res) => {
     <body>
         <h1>Unity WebGL compression demo</h1>
         <p>
-            <a href="/webgl/index.html">
+            <a href="/webgl_street/index.html">
                 View
             </a>
         </p>
