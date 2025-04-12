@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 
+// 1 month
+const MONTH = 60 * 60 * 24 * 30;
 const app = express();
 
 // 마지막이 cond 랑 같은지 비교
@@ -35,26 +37,36 @@ function path_split(text) {
   return arr;
 }
 
-app.get("/webgl/**", (req, res) => {
+app.get("/webgl**", (req, res) => {
   var url = req.url;
-  // console.log("url", url);
 
-  var comp = false;
+  var comp_gz = false;
+  var comp_br = false;
   if (comp_last(url, ".gz")) {
-    comp = true;
+    comp_gz = true;
+  } else if (comp_last(url, ".br")) {
+    comp_br = true;
   }
 
   var ctype = null;
   if (
     comp_last(url, ".wasm") || //
-    comp_last(url, ".wasm.gz")
+    comp_last(url, ".wasm.gz") ||
+    comp_last(url, ".wasm.br")
   ) {
     ctype = "application/wasm";
   } else if (
-    comp_last(url, ".js") || //
-    comp_last(url, ".js.gz")
+    comp_last(url, ".js") ||
+    comp_last(url, ".js.gz") ||
+    comp_last(url, ".js.br")
   ) {
     ctype = "application/javascript";
+  } else if (
+    comp_last(url, ".data") ||
+    comp_last(url, ".data.gz") ||
+    comp_last(url, ".data.br")
+  ) {
+    ctype = "application/data";
   }
 
   var arr = path_split(url);
@@ -63,7 +75,7 @@ app.get("/webgl/**", (req, res) => {
   // webgl 뒷부분을 읽어 파일 경로를 많음
   var fpath = "";
   for (var i = 0; i < arr.length; i++) {
-    if (arr[i] != "webgl") continue;
+    // if (arr[i] != "webgl") continue;
 
     for (; i < arr.length; i++) {
       fpath = path.join(fpath, arr[i]);
@@ -73,34 +85,27 @@ app.get("/webgl/**", (req, res) => {
 
   // 절대 경로 만들기기
   fpath = path.join(__dirname, "public", fpath);
-  if (comp) {
-    console.log("send gz", ctype, url);
-  }
-
-  if (comp) {
+  if (comp_gz) {
     res.setHeader("Content-Encoding", "gzip");
+    res.set("Cache-Control", "public, max-age=" + MONTH);
+  } else if (comp_br) {
+    res.setHeader("Content-Encoding", "br");
+    res.set("Cache-Control", "public, max-age=" + MONTH);
   }
 
   if (ctype !== null) {
     res.setHeader("Content-Type", ctype);
   }
 
-  // // 실패, 캐싱하려고 직점 일기
-  // fs.readFile(fpath, "utf8", function (err, data) {
-  //   if (err) {
-  //     console.log("fail", fpath);
-  //     throw err;
-  //   }
+  if (comp_gz || comp_br) {
+    console.log("=====");
+    console.log("webgl req url", url);
+    if (comp_br) console.log("comp_br");
+    if (comp_gz) console.log("comp_gz");
+    console.log("ctype", ctype);
+    console.log("fpath", fpath);
+  }
 
-  //   res.write(data);
-  //   res.end();
-  //   // console.log("fpath", fpath, data.length);
-  // });
-
-  // edge 에서 오류남
-  // res.sendFile(fpath);
-
-  // edge 에서도 잘됨
   fs.createReadStream(fpath).pipe(res);
 });
 
@@ -115,7 +120,7 @@ app.get("/", (_, res) => {
     <body>
         <h1>Unity WebGL compression demo</h1>
         <p>
-            <a href="/webgl/index.html">
+            <a href="/webgl_4/index.html">
                 View
             </a>
         </p>
