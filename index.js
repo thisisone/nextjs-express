@@ -1,14 +1,24 @@
 const express = require("express");
-const compression = require("compression");
+// const compression = require("compression");
 const path = require("path");
 const fs = require("fs");
 
 // 1 month
 const MONTH = 60 * 60 * 24 * 30;
-// const MAX_AGE = MONTH;
-const MAX_AGE = 1;
-const app = express();
-app.use(compression());
+const MAX_AGE = MONTH;
+// const MAX_AGE = 1;
+
+let count = 0;
+
+//
+// 함수들
+//
+
+// 파일 크기 얻기
+function getFilesizeInBytes(filename) {
+  var stats = fs.statSync(filename);
+  return stats.size;
+}
 
 // 마지막이 cond 랑 같은지 비교
 function comp_last(text, cond) {
@@ -40,30 +50,6 @@ function path_split(text) {
 
   return arr;
 }
-
-app.get("/webgl**", (req, res) => {
-  try {
-    if (req.url.indexOf(".br") > 0) {
-      var a = req.header("Accept-Encoding");
-      console.log("req comp", a);
-    }
-
-    proc_webgl(req, res);
-    // console.log("ok", req.url);
-  } catch (e) {
-    console.log("get webgl fail", req.url, e.message);
-    res.send(
-      `
-<div>
-  request: ${req.url}
-</div>
-<div>
-  error: ${e.message}
-</div>
-      `
-    );
-  }
-});
 
 // web 처리
 function proc_webgl(req, res) {
@@ -113,27 +99,32 @@ function proc_webgl(req, res) {
     }
     break;
   }
-
   // 절대 경로 만들기기
   fpath = path.join(__dirname, "public", fpath);
+
+  // 해더 설정
+
+  // 1. 압축 타입 설정
+  const user_comp = comp_gz || comp_br;
   if (comp_gz) {
     res.setHeader("Content-Encoding", "gzip");
-    res.setHeader("Cache-Control", "no-cache");
-
-    // res.set("Cache-Control", "public, max-age=" + MAX_AGE);
   } else if (comp_br) {
     res.setHeader("Content-Encoding", "br");
-    res.setHeader("Cache-Control", "no-cache");
-
-    // res.set("Cache-Control", "public, max-age=" + MAX_AGE);
   }
 
+  // 2. 파일 캐싱 유도
+  if (user_comp) {
+    // res.setHeader("Cache-Control", "no-cache");
+    res.set("Cache-Control", "public, max-age=" + MAX_AGE);
+  }
+
+  // 3. 컨텐츠 타입 설정
   if (ctype !== null) {
     res.setHeader("Content-Type", ctype);
   }
 
   // 로그 출력
-  if (comp_gz || comp_br) {
+  if (user_comp) {
     // console.log("=====");
     // console.log("webgl req url", url);
     // if (comp_br) console.log("comp_br");
@@ -152,16 +143,19 @@ function proc_webgl(req, res) {
     // }
   }
 
+  // 파일 전송
   fs.createReadStream(fpath).pipe(res);
 }
 
-// 파일 크기 얻기
-function getFilesizeInBytes(filename) {
-  var stats = fs.statSync(filename);
-  return stats.size;
-}
+//
+// express
+//
+const app = express();
+// app.use(compression());
 
-let count = 0;
+// public 파일을 단순 전달하는 방법
+// 이걸로는 unity webgl 압축을 사용할 수 없다.
+// app.use(express.static("public"));
 app.get("/", (_, res) => {
   count++;
   res.send(
@@ -172,34 +166,34 @@ app.get("/", (_, res) => {
     <body>
       <main>
           <h1>street for promotion (홍보의 거리) - )v3 </h1>
-          <hr/>
-          <br/>
-          <br/>
-
-          <h3>
-            gzip version -
-              <a href="/webgl_3gz/index.html">
-                  ENTER
-              </a>
-          </h3>
-          <div>
-            - ios can't load
-          </div>
           <br/>
           <br/>
 
           <hr/>
           <h3>
-            br version -
+            br compress (20MB) -
               <a href="/webgl_3br/index.html">
                   ENTER
               </a>
           </h3>
           <div>
-            - ios can't load <br/>
-            - chrome browser can't load <br/>
-            - edge browser can't load
+            - ios is not support  yet
           </div>
+          <br/>
+          <br/>
+
+          <br/>
+          <h3>
+            gzip compress (39MB) -
+              <a href="/webgl_3gz/index.html">
+                  ENTER
+              </a>
+          </h3>
+          <div>
+            - ios is not support  yet
+          </div>
+          <br/>
+          <br/>
 
         </main>
     </body>
@@ -207,15 +201,40 @@ app.get("/", (_, res) => {
     `
   );
 });
+
+// REST apoi 테스트트
 app.get("/api/**", (req, res) => {
   count++;
   res.send("api=" + count + " url=" + req.url);
 });
 
-// public 파일을 단순 전달하는 방법
-// 이걸로는 unity webgl 압축을 사용할 수 없다.
-// app.use(express.static("public"));
+// 유니티 압축 빌드 배포 폴더명은
+// /public/webgl~~ 형식으로 이름을 지어야한다.
+app.get("/webgl**", (req, res) => {
+  try {
+    if (req.url.indexOf(".br") > 0) {
+      var a = req.header("Accept-Encoding");
+      console.log("req comp", a);
+    }
 
+    proc_webgl(req, res);
+    // console.log("ok", req.url);
+  } catch (e) {
+    console.log("get webgl fail", req.url, e.message);
+    res.send(
+      `
+<div>
+  request: ${req.url}
+</div>
+<div>
+  error: ${e.message}
+</div>
+      `
+    );
+  }
+});
+
+// 서버 시작
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log("express listen");
@@ -226,10 +245,5 @@ app.listen(PORT, () => {
 module.exports = app;
 
 /*
-
-curl http://192.168.0.24:3000/webgl_3m/Build/z_web.data.br
-
-curl http://192.168.0.24:3000/webgl_3m/Build/z_web.framework.js.br
-
 
 */
