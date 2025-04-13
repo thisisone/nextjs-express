@@ -62,3 +62,6 @@ vercel.json 에 builds 를 build 로 오타를 냈더니 동작하지 않았다.
 
 index.js 마지막에 `mobile.exports = app`
 꼭 있어야한다.
+
+
+http://192.168.0.24:3000/webgl_4/index.html

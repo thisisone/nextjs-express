@@ -1,11 +1,16 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const dotenv = require("dotenv");
+dotenv.config();
 
 // 1 month
 const MONTH = 60 * 60 * 24 * 30;
-const MAX_AGE = MONTH;
-// const MAX_AGE = 1;
+
+let IS_DEV = process.env.IS_DEV;
+const MAX_AGE = IS_DEV ? MONTH : 0;
+console.log("IS_DEV", IS_DEV);
+console.log("MAX_AGE", MAX_AGE);
 
 let count = 0;
 
@@ -113,8 +118,11 @@ function proc_webgl(req, res) {
 
   // 2. 파일 캐싱 유도
   if (user_comp) {
-    // res.setHeader("Cache-Control", "no-cache");
-    res.set("Cache-Control", "public, max-age=" + MAX_AGE);
+    if (MAX_AGE > 0) {
+      res.set("Cache-Control", "public, max-age=" + MAX_AGE);
+    } else {
+      res.setHeader("Cache-Control", "no-cache");
+    }
   }
 
   // 3. 컨텐츠 타입 설정
