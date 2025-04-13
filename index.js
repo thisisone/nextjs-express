@@ -1,5 +1,4 @@
 const express = require("express");
-// const compression = require("compression");
 const path = require("path");
 const fs = require("fs");
 
@@ -151,55 +150,22 @@ function proc_webgl(req, res) {
 // express
 //
 const app = express();
-// app.use(compression());
 
 // public 파일을 단순 전달하는 방법
 // 이걸로는 unity webgl 압축을 사용할 수 없다.
 // app.use(express.static("public"));
 app.get("/", (_, res) => {
   count++;
-  res.send(
-    `
-<html>
-    <head>
-    </head>
-    <body>
-      <main>
-          <h1>street for promotion (홍보의 거리) - )v3 </h1>
-          <br/>
-          <br/>
 
-          <hr/>
-          <h3>
-            br compress (20MB) -
-              <a href="/webgl_3br/index.html">
-                  ENTER
-              </a>
-          </h3>
-          <div>
-            - ios is not support  yet
-          </div>
-          <br/>
-          <br/>
-
-          <br/>
-          <h3>
-            gzip compress (39MB) -
-              <a href="/webgl_3gz/index.html">
-                  ENTER
-              </a>
-          </h3>
-          <div>
-            - ios is not support  yet
-          </div>
-          <br/>
-          <br/>
-
-        </main>
-    </body>
-</html>
-    `
-  );
+  try {
+    var fpath = path.join(__dirname, "public", "index.html");
+    var text = fs.readFileSync(fpath, "utf-8");
+    res.send(text);
+  } catch (e) {
+    console.log("GET / fail", e.message);
+    res.status(500);
+    res.send("GET / fail");
+  }
 });
 
 // REST apoi 테스트트
