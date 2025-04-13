@@ -8,7 +8,8 @@ dotenv.config();
 const MONTH = 60 * 60 * 24 * 30;
 
 let IS_DEV = process.env.IS_DEV;
-const MAX_AGE = IS_DEV ? MONTH : 0;
+// const MAX_AGE = IS_DEV ? MONTH : 0;
+const MAX_AGE = 0;
 console.log("IS_DEV", IS_DEV);
 console.log("MAX_AGE", MAX_AGE);
 
@@ -121,7 +122,7 @@ function proc_webgl(req, res) {
     if (MAX_AGE > 0) {
       res.set("Cache-Control", "public, max-age=" + MAX_AGE);
     } else {
-      res.setHeader("Cache-Control", "no-cache");
+      // res.setHeader("Cache-Control", "no-cache");
     }
   }
 
