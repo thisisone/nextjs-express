@@ -4,6 +4,8 @@ const fs = require("fs");
 
 // 1 month
 const MONTH = 60 * 60 * 24 * 30;
+// const MAX_AGE = MONTH;
+const MAX_AGE = 1;
 const app = express();
 
 // 마지막이 cond 랑 같은지 비교
@@ -66,7 +68,8 @@ app.get("/webgl**", (req, res) => {
     comp_last(url, ".data.gz") ||
     comp_last(url, ".data.br")
   ) {
-    ctype = "application/data";
+    // ctype = "application/data";
+    ctype = null;
   }
 
   var arr = path_split(url);
@@ -87,16 +90,17 @@ app.get("/webgl**", (req, res) => {
   fpath = path.join(__dirname, "public", fpath);
   if (comp_gz) {
     res.setHeader("Content-Encoding", "gzip");
-    res.set("Cache-Control", "public, max-age=" + MONTH);
+    // res.set("Cache-Control", "public, max-age=" + MAX_AGE);
   } else if (comp_br) {
     res.setHeader("Content-Encoding", "br");
-    res.set("Cache-Control", "public, max-age=" + MONTH);
+    // res.set("Cache-Control", "public, max-age=" + MAX_AGE);
   }
 
   if (ctype !== null) {
     res.setHeader("Content-Type", ctype);
   }
 
+  // 로그 출력
   if (comp_gz || comp_br) {
     console.log("=====");
     console.log("webgl req url", url);
@@ -104,10 +108,27 @@ app.get("/webgl**", (req, res) => {
     if (comp_gz) console.log("comp_gz");
     console.log("ctype", ctype);
     console.log("fpath", fpath);
+
+    var fsize = getFilesizeInBytes(fpath);
+    if (fsize < 1024) {
+      console.log("fsize", fsize, "bytes");
+    } else if (fsize < 1024) {
+      const size = Math.ceil(fsize / 1024);
+      console.log("fsize", size, "KB");
+    } else {
+      const size = Math.ceil(fsize / (1024 * 1024));
+      console.log("fsize", size, "MB");
+    }
   }
 
   fs.createReadStream(fpath).pipe(res);
 });
+
+// 파일 크기 얻기
+function getFilesizeInBytes(filename) {
+  var stats = fs.statSync(filename);
+  return stats.size;
+}
 
 let count = 0;
 app.get("/", (_, res) => {
@@ -118,15 +139,17 @@ app.get("/", (_, res) => {
     <head>
     </head>
     <body>
-        <h1>Unity WebGL compression demo</h1>
-        <p>
-            <a href="/webgl_4/index.html">
-                View
-            </a>
-        </p>
-        <p>
-            visit counter ${count}
-        </p>
+      <main>
+          <h1>street for promotion v3</h1>
+          <p>
+              <a href="/webgl_3_2/index.html">
+                  View
+              </a>
+          </p>
+          <p>
+              visit counter ${count}
+          </p>
+        </main>
     </body>
 </html>
     `
@@ -145,8 +168,25 @@ const PORT = 3000;
 app.listen(PORT, () => {
   console.log("express listen");
   console.log("http://localhost:3000/");
-  console.log("http://localhost:3000/api/test");
-  console.log("http://localhost:3000/webgl/index.html");
+  console.log("http://192.168.0.24:3000/");
 });
 
 module.exports = app;
+
+/*
+
+http://192.168.0.24:3000/webgl_3/Build/z_web.framework.js.br
+
+http://192.168.0.24:3000
+/webgl_3
+/Build
+/z_web.framework.js.br
+
+http://192.168.0.24:3000/webgl_3_2/Build/z_web.data.br
+
+
+http://192.168.0.24:3000/webgl_3_2/Build/z_web.data.br
+
+http://unity.sidnft.com/webgl_3/Build/z_web.data.br
+
+*/
