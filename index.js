@@ -172,6 +172,10 @@ app.get("/", (_, res) => {
     <body>
       <main>
           <h1>street for promotion (홍보의 거리) - )v3 </h1>
+          <hr/>
+          <br/>
+          <br/>
+
           <h3>
             gzip version -
               <a href="/webgl_3gz/index.html">
@@ -179,10 +183,12 @@ app.get("/", (_, res) => {
               </a>
           </h3>
           <div>
-            ios can't load
+            - ios can't load
           </div>
+          <br/>
+          <br/>
 
-
+          <hr/>
           <h3>
             br version -
               <a href="/webgl_3br/index.html">
@@ -190,9 +196,9 @@ app.get("/", (_, res) => {
               </a>
           </h3>
           <div>
-            ios can't load <br/>
-            chrome browser can't load <br/>
-            edge browser can't load
+            - ios can't load <br/>
+            - chrome browser can't load <br/>
+            - edge browser can't load
           </div>
 
         </main>
