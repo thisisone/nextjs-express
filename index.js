@@ -1,5 +1,5 @@
 const express = require("express");
-// const compression = require("compression");
+const compression = require("compression");
 const path = require("path");
 const fs = require("fs");
 
@@ -8,7 +8,7 @@ const MONTH = 60 * 60 * 24 * 30;
 // const MAX_AGE = MONTH;
 const MAX_AGE = 1;
 const app = express();
-// app.use(compression());
+app.use(compression());
 
 // 마지막이 cond 랑 같은지 비교
 function comp_last(text, cond) {
@@ -173,17 +173,28 @@ app.get("/", (_, res) => {
       <main>
           <h1>street for promotion (홍보의 거리) - )v3 </h1>
           <h3>
-            PC version -
-              <a href="/webgl_3p/index.html">
+            gzip version -
+              <a href="/webgl_3gz/index.html">
                   ENTER
               </a>
           </h3>
+          <div>
+            ios can't load
+          </div>
+
+
           <h3>
-            mobuile version (no girl) -
-              <a href="/webgl_3m/index.html">
+            br version -
+              <a href="/webgl_3br/index.html">
                   ENTER
               </a>
           </h3>
+          <div>
+            ios can't load <br/>
+            chrome browser can't load <br/>
+            edge browser can't load
+          </div>
+
         </main>
     </body>
 </html>
