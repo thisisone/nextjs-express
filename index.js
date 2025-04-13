@@ -1,4 +1,5 @@
 const express = require("express");
+// const compression = require("compression");
 const path = require("path");
 const fs = require("fs");
 
@@ -7,6 +8,7 @@ const MONTH = 60 * 60 * 24 * 30;
 // const MAX_AGE = MONTH;
 const MAX_AGE = 1;
 const app = express();
+// app.use(compression());
 
 // 마지막이 cond 랑 같은지 비교
 function comp_last(text, cond) {
@@ -40,6 +42,31 @@ function path_split(text) {
 }
 
 app.get("/webgl**", (req, res) => {
+  try {
+    if (req.url.indexOf(".br") > 0) {
+      var a = req.header("Accept-Encoding");
+      console.log("req comp", a);
+    }
+
+    proc_webgl(req, res);
+    // console.log("ok", req.url);
+  } catch (e) {
+    console.log("get webgl fail", req.url, e.message);
+    res.send(
+      `
+<div>
+  request: ${req.url}
+</div>
+<div>
+  error: ${e.message}
+</div>
+      `
+    );
+  }
+});
+
+// web 처리
+function proc_webgl(req, res) {
   var url = req.url;
 
   var comp_gz = false;
@@ -62,7 +89,8 @@ app.get("/webgl**", (req, res) => {
     comp_last(url, ".js.gz") ||
     comp_last(url, ".js.br")
   ) {
-    ctype = "application/javascript";
+    // ctype = "application/javascript";
+    ctype = null;
   } else if (
     comp_last(url, ".data") ||
     comp_last(url, ".data.gz") ||
@@ -90,9 +118,13 @@ app.get("/webgl**", (req, res) => {
   fpath = path.join(__dirname, "public", fpath);
   if (comp_gz) {
     res.setHeader("Content-Encoding", "gzip");
+    res.setHeader("Cache-Control", "no-cache");
+
     // res.set("Cache-Control", "public, max-age=" + MAX_AGE);
   } else if (comp_br) {
     res.setHeader("Content-Encoding", "br");
+    res.setHeader("Cache-Control", "no-cache");
+
     // res.set("Cache-Control", "public, max-age=" + MAX_AGE);
   }
 
@@ -102,27 +134,26 @@ app.get("/webgl**", (req, res) => {
 
   // 로그 출력
   if (comp_gz || comp_br) {
-    console.log("=====");
-    console.log("webgl req url", url);
-    if (comp_br) console.log("comp_br");
-    if (comp_gz) console.log("comp_gz");
-    console.log("ctype", ctype);
-    console.log("fpath", fpath);
-
-    var fsize = getFilesizeInBytes(fpath);
-    if (fsize < 1024) {
-      console.log("fsize", fsize, "bytes");
-    } else if (fsize < 1024) {
-      const size = Math.ceil(fsize / 1024);
-      console.log("fsize", size, "KB");
-    } else {
-      const size = Math.ceil(fsize / (1024 * 1024));
-      console.log("fsize", size, "MB");
-    }
+    // console.log("=====");
+    // console.log("webgl req url", url);
+    // if (comp_br) console.log("comp_br");
+    // if (comp_gz) console.log("comp_gz");
+    // console.log("ctype", ctype);
+    // console.log("fpath", fpath);
+    // var fsize = getFilesizeInBytes(fpath);
+    // if (fsize < 1024) {
+    //   console.log("fsize", fsize, "bytes");
+    // } else if (fsize < 1024) {
+    //   const size = Math.ceil(fsize / 1024);
+    //   console.log("fsize", size, "KB");
+    // } else {
+    //   const size = Math.ceil(fsize / (1024 * 1024));
+    //   console.log("fsize", size, "MB");
+    // }
   }
 
   fs.createReadStream(fpath).pipe(res);
-});
+}
 
 // 파일 크기 얻기
 function getFilesizeInBytes(filename) {
@@ -140,15 +171,19 @@ app.get("/", (_, res) => {
     </head>
     <body>
       <main>
-          <h1>street for promotion v3</h1>
-          <p>
-              <a href="/webgl_3_2/index.html">
-                  View
+          <h1>street for promotion (홍보의 거리) - )v3 </h1>
+          <h3>
+            PC version -
+              <a href="/webgl_3p/index.html">
+                  ENTER
               </a>
-          </p>
-          <p>
-              visit counter ${count}
-          </p>
+          </h3>
+          <h3>
+            mobuile version (no girl) -
+              <a href="/webgl_3m/index.html">
+                  ENTER
+              </a>
+          </h3>
         </main>
     </body>
 </html>
@@ -175,18 +210,9 @@ module.exports = app;
 
 /*
 
-http://192.168.0.24:3000/webgl_3/Build/z_web.framework.js.br
+curl http://192.168.0.24:3000/webgl_3m/Build/z_web.data.br
 
-http://192.168.0.24:3000
-/webgl_3
-/Build
-/z_web.framework.js.br
+curl http://192.168.0.24:3000/webgl_3m/Build/z_web.framework.js.br
 
-http://192.168.0.24:3000/webgl_3_2/Build/z_web.data.br
-
-
-http://192.168.0.24:3000/webgl_3_2/Build/z_web.data.br
-
-http://unity.sidnft.com/webgl_3/Build/z_web.data.br
 
 */
