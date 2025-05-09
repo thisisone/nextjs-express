@@ -210,11 +210,16 @@ app.get("/webgl**", (req, res) => {
 });
 
 // 서버 시작
-const PORT = 3000;
+let PORT = 3000;
+if (process.env.PORT) {
+  PORT = parseInt(process.env.PORT);
+}
+console.log("PORT", PORT);
+
 app.listen(PORT, () => {
   console.log("express listen");
-  console.log("http://localhost:3000/");
-  console.log("http://192.168.0.24:3000/");
+  console.log(`http://localhost:${PORT}/`);
+  console.log(`http://192.168.0.24:${PORT}/`);
 });
 
 module.exports = app;

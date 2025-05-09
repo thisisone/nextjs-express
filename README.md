@@ -67,3 +67,9 @@ http://192.168.0.24:3000/webgl_4/index.html
 
 index.html:1
 Uncaught (in promise) Invalid binary data file size! (offset=12217765, size=3672221, file length=15202359)
+
+
+
+I changed Girl to successfully load iOS.
+
+It's a shame that there's no proper animation.
