@@ -1,5 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BUILD_DATE = exports.VERSION = void 0;
-exports.VERSION = 7;
-exports.BUILD_DATE = '2025-05-10 15:01:26';
+exports.VERSION = 8;
+exports.BUILD_DATE = '2025-05-10 15:12:17';
