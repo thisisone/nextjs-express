@@ -151,8 +151,10 @@ function proc_webgl(req, res) {
     // }
   }
 
-  // 파일 전송
-  fs.createReadStream(fpath).pipe(res);
+  // // 파일 전송
+  // fs.createReadStream(fpath).pipe(res);
+
+  res.send(`ok, fpath=${fpath}`);
 }
 
 //
