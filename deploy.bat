@@ -1,7 +1,7 @@
 node ver.js
 
-cmd /C npm run build
-pause
+rem cmd /C npm run build
+rem pause
 
 git add .
 git commit -m "prod"

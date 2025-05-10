@@ -93,17 +93,12 @@ function get_ext_before_comp(url, comp) {
 //
 // express
 //
-// app.get("/**", (req, res) => {
-//   const data = fs.readFileSync(".\\public\\index.html", "utf-8");
-//   res.send(data);
-// });
 // public 파일을 단순 전달하는 방법
 // 이걸로는 unity webgl 압축을 사용할 수 없다.
 // app.use(express.static("public"));
 //
 // http://localhost:3002/webgl_mp/index.html
 //
-//app.get("/**", (req: Request, res: Response) => {
 function proc_all_file(req, res) {
     console.info("GET start", req.url);
     let target_path = "";
