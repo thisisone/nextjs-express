@@ -9,7 +9,7 @@ https://docs.unity3d.com/kr/2021.3/Manual/webgl-deploying.html
 # ercel 로 express 서버를 배포해보자 / 유니티 webgl 압축 지원하는 페이지를 배포 가능
 
 블로그 링크:
-https://serverdown.tistory.com/1225
+https://blog.sidnft.com/1225
 
 - 따라하기 영상 있음
 - 후기 있음
@@ -17,7 +17,7 @@ https://serverdown.tistory.com/1225
 # 게임 홍보를 위한 유니티 webgl 페이지 만들기 / 홍보의 거리 v2 / street for promotion V2
 
 블로그 링크:
-https://serverdown.tistory.com/1260
+https://blog.sidnft.com/1260
 
 - 버전업 개발 일지 있음
 - 결과물 데모: https://unity.sidnft.com
@@ -35,7 +35,7 @@ vercel dev
 npm run start
 ```
 
-이 명령어는 정상으로 동작해야 한다.
+이 명령어는 정상으로 동작한다면 개발환경이 갖춰진 것이다.
 
 ```
 vercel deploy
@@ -50,7 +50,7 @@ vercel deploy
 vercel --prod
 ```
 
-즉시 공개한다.
+프로덕션 배포한다.
 모두에게 보여지게 된다.
 
 # 각종 문제해결
@@ -63,13 +63,21 @@ vercel.json 에 builds 를 build 로 오타를 냈더니 동작하지 않았다.
 index.js 마지막에 `mobile.exports = app`
 꼭 있어야한다.
 
-http://192.168.0.24:3000/webgl_4/index.html
+# 추가작업 tailwind 동작하는 .html 빌드하기
 
-index.html:1
-Uncaught (in promise) Invalid binary data file size! (offset=12217765, size=3672221, file length=15202359)
+단순히 html 파일을 작성하니까 모양이 나지 않았다.
+그래서 tailwind 를 작용한 페이지를 html 파일로 만들 것이다.
 
+```
+npm i tailwindcss
+```
 
+tailwind 설치한다.
 
-I changed Girl to successfully load iOS.
+```
+npx @tailwindcss/cli -i ./public/tailwind.css -o ./public/style.css --watch
+```
 
-It's a shame that there's no proper animation.
+자동으로 style.css 가 빌드 된다.
+
+가끔 다시 실행해보면 문법 오류난것도 알려준다.

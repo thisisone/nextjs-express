@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+body {
+  @apply bg-black text-white border-gray-800;
+}
+h1 {
+  @apply text-4xl m-4;
+}
+h2 {
+  @apply text-3xl mx-4 my-3;
+}
+h3 {
+  @apply text-2xl;
+}
+hr {
+  @apply mt-8;
+}
+footer {
+  @apply m-4;
+}
+
+.tw_section {
+  @apply m-4 flex;
+}
+.tw_icon {
+  @apply w-48 h-48 rounded-2xl border-2;
+}
+.tw_icon_desc {
+  @apply ml-4;
+}
+.tw_button {
+  @apply px-4 py-1 rounded-full border-2 bg-gray-800;
+}
+.tw_button_small {
+  @apply ml-4;
+}

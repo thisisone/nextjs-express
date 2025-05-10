@@ -1649,6 +1649,11 @@ stream-to-promise@2.2.0:
     end-of-stream "~1.1.0"
     stream-to-array "~2.3.0"
 
+tailwindcss@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.1.6.tgz"
+  integrity sha512-j0cGLTreM6u4OWzBeLBpycK0WIh8w7kSwcUsQZoGLHZ7xDTdM69lN64AgoIEEwFi0tnhs4wSykUa5YWxAzgFYg==
+
 tar@^7.4.0:
   version "7.4.3"
   resolved "https://registry.npmjs.org/tar/-/tar-7.4.3.tgz"

@@ -177,6 +177,20 @@ app.get("/", (_, res) => {
   }
 });
 
+app.get("/style.css", (req, res) => {
+  //
+  try {
+    var fpath = path.join(__dirname, "public", "style.css");
+    var text = fs.readFileSync(fpath, "utf-8");
+    res.setHeader("Content-Type", "text/style");
+    res.send(text);
+  } catch (e) {
+    console.error("GET / fail", e.message);
+    res.status(500);
+    res.send("GET / fail");
+  }
+});
+
 // REST apoi 테스트트
 app.get("/api/**", (req, res) => {
   count++;
