@@ -11,7 +11,7 @@ console.log("build_date=", build_date);
 
 fs.writeFileSync(".ver", `${v}`);
 fs.writeFileSync(
-  ".\\public\\ver.mjs",
+  ".\\src\\ver.ts",
   `
 export const VERSION=${v};
 export const BUILD_DATE='${build_date}';
