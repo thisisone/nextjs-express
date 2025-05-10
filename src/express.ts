@@ -144,7 +144,7 @@ export function proc_dummy(req: Request, res: Response) {
 
 //
 export function proc_all_file(req: Request, res: Response) {
-  console.log("proc_all_file");
+  // console.log("proc_all_file");
   console.log("GET start", req.url);
 
   let target_path = "";
@@ -198,33 +198,33 @@ export function proc_all_file(req: Request, res: Response) {
       fsize = "NG_" + e.message;
     }
 
-    // fs.createReadStream(target_path).pipe(res);
+    fs.createReadStream(target_path).pipe(res);
 
-    console.log("fread");
-    let fread = "";
-    try {
-      const a = fs.readFileSync(target_path);
-      console.log("a", a);
-      fread = "ok, " + a.length;
-    } catch (err2) {
-      const e = err2 as Error;
-      fread = "ng, " + e.message;
-    }
+    // console.log("fread");
+    // let fread = "";
+    // try {
+    //   const a = fs.readFileSync(target_path);
+    //   console.log("a", a);
+    //   fread = "ok, " + a.length;
+    // } catch (err2) {
+    //   const e = err2 as Error;
+    //   fread = "ng, " + e.message;
+    // }
 
-    const p_cmd = process.cwd();
-    res.send(
-      `ok
-      , __dirname=${__dirname}
-      , root_dir=${root_dir}
-      , cmd_dir=${p_cmd}
-      , target_path=${target_path}
-      , comp=${comp}
-      , ext=${ext}
-      , content_type=${content_type}
-      , fsize=${fsize}
-      , fread=${fread}
-      `
-    );
+    // const p_cmd = process.cwd();
+    // res.send(
+    //   `ok
+    //   , __dirname=${__dirname}
+    //   , root_dir=${root_dir}
+    //   , cmd_dir=${p_cmd}
+    //   , target_path=${target_path}
+    //   , comp=${comp}
+    //   , ext=${ext}
+    //   , content_type=${content_type}
+    //   , fsize=${fsize}
+    //   , fread=${fread}
+    //   `
+    // );
   } catch (err) {
     const e = err as Error;
     res.send(`ng, ${e.message}`);
