@@ -1,19 +1,23 @@
 const express = require("express");
-// const { set_root_dir, proc_all_file } = require("./dist/src/express");
-// set_root_dir(__dirname);
+const {
+  set_root_dir,
+  proc_all_file,
+  proc_dummy,
+} = require("./dist/src/express");
+set_root_dir(__dirname);
 
 const app = express();
 
-let count = 0;
+// let count = 0;
 // app.get("/", (req, res) => {
 //   console.log("GET /", req.url);
 //   res.send("ok, " + count++);
 // });
-app.get("/", proc_all_file);
-app.get("/style.css", proc_all_file);
-app.get("/favicon.ico", proc_all_file);
-app.get("/favicon.png", proc_all_file);
-// app.get("/webgl*", proc_all_file);
+app.get("/", proc_dummy);
+app.get("/style.css", proc_dummy);
+app.get("/favicon.ico", proc_dummy);
+app.get("/favicon.png", proc_dummy);
+app.get("/webgl*", proc_dummy);
 
 // app.get("/api/**", (req, res) => {
 //   console.log("get /abc", req.url);

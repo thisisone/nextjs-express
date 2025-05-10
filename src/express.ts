@@ -116,6 +116,12 @@ function get_ext_before_comp(url: string, comp: string) {
 // express
 //
 
+// 테스트용 호출
+export function proc_dummy(req: Request, res: Response) {
+  console.log("GET", req.urk);
+  res.send(req.url);
+}
+
 // public 파일을 단순 전달하는 방법
 // 이걸로는 unity webgl 압축을 사용할 수 없다.
 // app.use(express.static("public"));

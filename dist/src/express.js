@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.set_root_dir = set_root_dir;
+exports.proc_dummy = proc_dummy;
 exports.proc_all_file = proc_all_file;
 const path = require("path");
 const fs = require("fs");
@@ -96,6 +97,11 @@ function get_ext_before_comp(url, comp) {
 //
 // express
 //
+// 테스트용 호출
+function proc_dummy(req, res) {
+    console.log("GET", req.urk);
+    res.send(req.url);
+}
 // public 파일을 단순 전달하는 방법
 // 이걸로는 unity webgl 압축을 사용할 수 없다.
 // app.use(express.static("public"));
