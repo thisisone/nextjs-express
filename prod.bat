@@ -2,7 +2,7 @@
 
 node ver.js
 
-npm run tsc
+cmd /C npm run tsc
 pause
 
 rem git add .ver
