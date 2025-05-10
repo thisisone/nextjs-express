@@ -1,12 +1,8 @@
 const express = require("express");
 const {
-  set_root_dir,
   proc_all_file,
   proc_dummy,
 } = require("./dist/src/express");
-
-// set_root_dir(__dirname);
-set_root_dir(process.cwd());
 
 const app = express();
 

@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.set_root_dir = set_root_dir;
+exports.proc_read_file = proc_read_file;
 exports.proc_dummy = proc_dummy;
 exports.proc_all_file = proc_all_file;
 exports.proc_all_file_old = proc_all_file_old;
+exports.init_app = init_app;
 const path = require("path");
 const fs = require("fs");
 const dotenv = require("dotenv");
@@ -14,7 +15,7 @@ dotenv.config();
 // const MAX_AGE = 0;
 // console.log("IS_DEV", IS_DEV);
 // console.log("MAX_AGE", MAX_AGE);
-let root_dir = __dirname;
+const root_dir = process.cwd();
 // MIME LIST
 // https://developer.mozilla.org/ko/docs/Web/HTTP/Guides/MIME_types/Common_types
 const ext_type_list = {};
@@ -36,11 +37,6 @@ ext_type_list[".js"] = "application/javascript";
 function get_file_size(fpath) {
     var stats = fs.statSync(fpath);
     return stats.size;
-}
-// ts 랑 js 가 폴더구조가 달라서 통일시켜야한다.
-function set_root_dir(dir) {
-    root_dir = dir;
-    console.log("root_dir", root_dir);
 }
 // / 나 \\ 전부 지원하는 분리기
 function path_split(text) {
@@ -103,6 +99,21 @@ function get_ext_before_comp(url, comp) {
 //
 // express
 //
+// 파일읽기 테스트
+function proc_read_file(_, res) {
+    //
+    try {
+        const fpath = path.join(
+        //
+        process.cwd(), "public", "webgl_mp", "index.html");
+        const data = fs.readFileSync(fpath);
+        res.send(`ok, fpath=${fpath}, data=${data.length}`);
+    }
+    catch (err) {
+        const e = err;
+        res.send(`ng, msg=${e.message}`);
+    }
+}
 // 테스트용 호출
 function proc_dummy(req, res) {
     console.log("GET", req.url);
@@ -246,4 +257,22 @@ function proc_all_file_old(req, res) {
         res.status(500);
         res.send("GET " + req.url + " fail");
     }
+}
+// 초기화
+function init_app(app) {
+    app.get("/", proc_dummy);
+    app.get("/style.css", proc_dummy);
+    app.get("/favicon.ico", proc_dummy);
+    app.get("/favicon.png", proc_dummy);
+    app.get("/webgl*", proc_all_file);
+    app.get("/abc", proc_read_file);
+    // app.get("/api/**", (req, res) => {
+    //   console.log("get /abc", req.url);
+    //   res.send("ok");
+    // });
+    // let count = 0;
+    // app.get("/", (req, res) => {
+    //   console.log("GET /", req.url);
+    //   res.send("ok, " + count++);
+    // });
 }

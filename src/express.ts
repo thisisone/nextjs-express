@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Express, Request, Response } from "express";
 const path = require("path");
 const fs = require("fs");
 const dotenv = require("dotenv");
@@ -18,7 +18,7 @@ interface MAP_KV {
 // console.log("IS_DEV", IS_DEV);
 // console.log("MAX_AGE", MAX_AGE);
 
-let root_dir = __dirname;
+const root_dir = process.cwd();
 
 // MIME LIST
 // https://developer.mozilla.org/ko/docs/Web/HTTP/Guides/MIME_types/Common_types
@@ -44,12 +44,6 @@ ext_type_list[".js"] = "application/javascript";
 function get_file_size(fpath: string) {
   var stats = fs.statSync(fpath);
   return stats.size;
-}
-
-// ts 랑 js 가 폴더구조가 달라서 통일시켜야한다.
-export function set_root_dir(dir: string) {
-  root_dir = dir;
-  console.log("root_dir", root_dir);
 }
 
 // / 나 \\ 전부 지원하는 분리기
@@ -121,6 +115,26 @@ function get_ext_before_comp(url: string, comp: string) {
 //
 // express
 //
+
+// 파일읽기 테스트
+export function proc_read_file(_: Request, res: Response) {
+  //
+  try {
+    const fpath = path.join(
+      //
+      process.cwd(),
+      "public",
+      "webgl_mp",
+      "index.html"
+    );
+
+    const data = fs.readFileSync(fpath);
+    res.send(`ok, fpath=${fpath}, data=${data.length}`);
+  } catch (err) {
+    const e = err as Error;
+    res.send(`ng, msg=${e.message}`);
+  }
+}
 
 // 테스트용 호출
 export function proc_dummy(req: Request, res: Response) {
@@ -298,4 +312,25 @@ export function proc_all_file_old(req: Request, res: Response) {
     res.status(500);
     res.send("GET " + req.url + " fail");
   }
+}
+
+// 초기화
+export function init_app(app: Express) {
+  app.get("/", proc_dummy);
+  app.get("/style.css", proc_dummy);
+  app.get("/favicon.ico", proc_dummy);
+  app.get("/favicon.png", proc_dummy);
+  app.get("/webgl*", proc_all_file);
+  app.get("/abc", proc_read_file);
+
+  // app.get("/api/**", (req, res) => {
+  //   console.log("get /abc", req.url);
+  //   res.send("ok");
+  // });
+
+  // let count = 0;
+  // app.get("/", (req, res) => {
+  //   console.log("GET /", req.url);
+  //   res.send("ok, " + count++);
+  // });
 }
