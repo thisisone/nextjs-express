@@ -110,7 +110,8 @@ function proc_dummy(req, res) {
 }
 //
 function proc_all_file(req, res) {
-    // console.info("GET start", req.url);
+    console.log("proc_all_file");
+    console.log("GET start", req.url);
     let target_path = "";
     let comp = "";
     let ext = "";
@@ -154,13 +155,29 @@ function proc_all_file(req, res) {
             fsize = "NG_" + e.message;
         }
         // fs.createReadStream(target_path).pipe(res);
+        console.log("fread");
+        let fread = "";
         try {
-            fs.createReadStream(target_path).pipe(res);
+            const a = fs.readFileSync(target_path);
+            console.log("a", a);
+            fread = "ok, " + a.length;
         }
         catch (err2) {
             const e = err2;
-            res.send(`ok, __dirname=${__dirname}, root_dir=${root_dir}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}, fsize=${fsize}`);
+            fread = "ng, " + e.message;
         }
+        const p_cmd = process.cwd();
+        res.send(`ok
+      , __dirname=${__dirname}
+      , root_dir=${root_dir}
+      , cmd_dir=${p_cmd}
+      , target_path=${target_path}
+      , comp=${comp}
+      , ext=${ext}
+      , content_type=${content_type}
+      , fsize=${fsize}
+      , fread=${fread}
+      `);
     }
     catch (err) {
         const e = err;
