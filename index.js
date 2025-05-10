@@ -1,5 +1,5 @@
 const express = require("express");
-const { set_root_dir, proc_all_file } = require("./build/src/express");
+const { set_root_dir, proc_all_file } = require("./dist/src/express");
 set_root_dir(__dirname);
 
 const app = express();
