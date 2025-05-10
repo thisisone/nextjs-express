@@ -1,5 +1,3 @@
-const express = require("./build/src/express");
-
-express.set_root_dir(__dirname);
-
-module.exports = express.app;
+const { app, set_root_dir } = require("./build/src/express");
+set_root_dir(__dirname);
+module.exports = app;
