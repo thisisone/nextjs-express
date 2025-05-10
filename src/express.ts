@@ -298,10 +298,10 @@ export function proc_all_file_old(req: Request, res: Response) {
 
 // 초기화
 export function init_app(app: Express) {
-  app.get("/", proc_dummy);
-  app.get("/style.css", proc_dummy);
-  app.get("/favicon.ico", proc_dummy);
-  app.get("/favicon.png", proc_dummy);
+  app.get("/", proc_all_file);
+  app.get("/style.css", proc_all_file);
+  app.get("/favicon.ico", proc_all_file);
+  app.get("/favicon.png", proc_all_file);
   app.get("/webgl*", proc_all_file);
   app.get("/abc", proc_read_file);
 
