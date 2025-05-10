@@ -32,6 +32,11 @@ ext_type_list[".js"] = "application/javascript";
 //
 // 함수들
 //
+// 파일 크기 얻기
+function get_file_size(fpath) {
+    var stats = fs.statSync(fpath);
+    return stats.size;
+}
 // ts 랑 js 가 폴더구조가 달라서 통일시켜야한다.
 function set_root_dir(dir) {
     root_dir = dir;
@@ -139,7 +144,9 @@ function proc_all_file(req, res) {
         if (ext_type_list[lower] !== undefined) {
             content_type = ext_type_list[lower];
         }
-        res.send(`ok, __dirname=${__dirname}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}`);
+        const fsize = get_file_size(target_path);
+        // fs.createReadStream(target_path).pipe(res);
+        res.send(`ok, __dirname=${__dirname}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}, fsize=${fsize}`);
     }
     catch (err) {
         const e = err;
