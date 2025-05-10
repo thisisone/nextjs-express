@@ -315,4 +315,13 @@ export function init_app(app: Express) {
   //   console.log("GET /", req.url);
   //   res.send("ok, " + count++);
   // });
+
+  setTimeout(() => {
+    // 로그 종류별로 남겨본다.
+    console.log("log");
+    console.debug("debug");
+    console.info("info");
+    console.warn("warn");
+    console.error("error");
+  }, 5000);
 }
