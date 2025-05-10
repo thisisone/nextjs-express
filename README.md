@@ -106,6 +106,6 @@ ok, __dirname=/var/task/dist/src, root_dir=/var/task, target_path=/var/task/publ
 ok, __dirname=/var/task/dist/src, root_dir=/var/task, target_path=/var/task/public/webgl_mp/index.html, comp=, ext=.html, content_type=text/html, fsize=NG_ENOENT: no such file or directory, stat '/var/task/public/webgl_mp/index.html'
 
 
-
+ok, fpath=/var/task/public/webgl_mp/index.html
 
 ```
