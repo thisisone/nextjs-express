@@ -124,7 +124,7 @@ function proc_all_file(req, res) {
             root_dir, "public", "index.html");
         }
         else {
-            const arr = path_split(target_path);
+            const arr = path_split(url);
             target_path = path.join(
             //
             root_dir, "public", ...arr);
@@ -154,10 +154,13 @@ function proc_all_file(req, res) {
             fsize = "NG_" + e.message;
         }
         // fs.createReadStream(target_path).pipe(res);
-        fs.createReadStream(target_path).pipe(res);
-        // res.send(
-        //   `ok, __dirname=${__dirname}, root_dir=${root_dir}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}, fsize=${fsize}`
-        // );
+        try {
+            fs.createReadStream(target_path).pipe(res);
+        }
+        catch (err2) {
+            const e = err2;
+            res.send(`ok, __dirname=${__dirname}, root_dir=${root_dir}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}, fsize=${fsize}`);
+        }
     }
     catch (err) {
         const e = err;

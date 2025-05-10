@@ -149,7 +149,7 @@ export function proc_all_file(req: Request, res: Response) {
         "index.html"
       );
     } else {
-      const arr = path_split(target_path);
+      const arr = path_split(url);
       target_path = path.join(
         //
         root_dir,
@@ -184,10 +184,14 @@ export function proc_all_file(req: Request, res: Response) {
     }
 
     // fs.createReadStream(target_path).pipe(res);
-    fs.createReadStream(target_path).pipe(res);
-    // res.send(
-    //   `ok, __dirname=${__dirname}, root_dir=${root_dir}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}, fsize=${fsize}`
-    // );
+    try {
+      fs.createReadStream(target_path).pipe(res);
+    } catch (err2) {
+      const e = err2 as Error;
+      res.send(
+        `ok, __dirname=${__dirname}, root_dir=${root_dir}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}, fsize=${fsize}`
+      );
+    }
   } catch (err) {
     const e = err as Error;
     res.send(`ng, ${e.message}`);
