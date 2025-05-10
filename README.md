@@ -98,3 +98,7 @@ npx @tailwindcss/cli -i ./public/tailwind.css -o ./public/style.css --watch
 자동으로 style.css 가 빌드 된다.
 
 가끔 다시 실행해보면 문법 오류난것도 알려준다.
+
+```
+ok, __dirname=/var/task/dist/src, root_dir=/var/task, target_path=/var/task/public/webgl_mp/index.html, comp=, ext=.html, content_type=text/html, fsize=0
+```
