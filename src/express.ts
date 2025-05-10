@@ -124,7 +124,8 @@ function get_ext_before_comp(url: string, comp: string) {
 //
 // http://localhost:3002/webgl_mp/index.html
 //
-app.get("/**", (req: Request, res: Response) => {
+//app.get("/**", (req: Request, res: Response) => {
+export function proc_all_file(req: Request, res: Response) {
   console.info("GET start", req.url);
 
   let target_path = "";
@@ -199,17 +200,4 @@ app.get("/**", (req: Request, res: Response) => {
     res.status(500);
     res.send("GET " + req.url + " fail");
   }
-});
-
-// 서버 시작
-let PORT = 3000;
-if (process.env.PORT) {
-  PORT = parseInt(process.env.PORT);
 }
-console.log("PORT", PORT);
-
-app.listen(PORT, () => {
-  console.log("express listen");
-  console.log(`http://localhost:${PORT}/`);
-  console.log(`http://192.168.0.24:${PORT}/`);
-});

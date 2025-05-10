@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 exports.set_root_dir = set_root_dir;
+exports.proc_all_file = proc_all_file;
 const express_1 = __importDefault(require("express"));
 const path = require("path");
 const fs = require("fs");
@@ -107,7 +108,8 @@ function get_ext_before_comp(url, comp) {
 //
 // http://localhost:3002/webgl_mp/index.html
 //
-exports.app.get("/**", (req, res) => {
+//app.get("/**", (req: Request, res: Response) => {
+function proc_all_file(req, res) {
     console.info("GET start", req.url);
     let target_path = "";
     let comp = "";
@@ -163,15 +165,4 @@ exports.app.get("/**", (req, res) => {
         res.status(500);
         res.send("GET " + req.url + " fail");
     }
-});
-// 서버 시작
-let PORT = 3000;
-if (process.env.PORT) {
-    PORT = parseInt(process.env.PORT);
 }
-console.log("PORT", PORT);
-exports.app.listen(PORT, () => {
-    console.log("express listen");
-    console.log(`http://localhost:${PORT}/`);
-    console.log(`http://192.168.0.24:${PORT}/`);
-});
