@@ -101,4 +101,11 @@ npx @tailwindcss/cli -i ./public/tailwind.css -o ./public/style.css --watch
 
 ```
 ok, __dirname=/var/task/dist/src, root_dir=/var/task, target_path=/var/task/public/webgl_mp/index.html, comp=, ext=.html, content_type=text/html, fsize=0
+
+
+ok, __dirname=/var/task/dist/src, root_dir=/var/task, target_path=/var/task/public/webgl_mp/index.html, comp=, ext=.html, content_type=text/html, fsize=NG_ENOENT: no such file or directory, stat '/var/task/public/webgl_mp/index.html'
+
+
+
+
 ```
