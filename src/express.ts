@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 const path = require("path");
 const fs = require("fs");
 const dotenv = require("dotenv");
@@ -31,7 +31,7 @@ ext_type_list[".wasm"] = "application/wasm";
 ext_type_list[".js"] = "application/javascript";
 // ext_type_list[".data"] = "application/octet-stream";
 
-export const app = express();
+// export const app = express();
 
 //
 // 함수들

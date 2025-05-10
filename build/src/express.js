@@ -1,12 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.app = void 0;
 exports.set_root_dir = set_root_dir;
 exports.proc_all_file = proc_all_file;
-const express_1 = __importDefault(require("express"));
 const path = require("path");
 const fs = require("fs");
 const dotenv = require("dotenv");
@@ -28,7 +23,7 @@ ext_type_list[".json"] = "application/json";
 ext_type_list[".wasm"] = "application/wasm";
 ext_type_list[".js"] = "application/javascript";
 // ext_type_list[".data"] = "application/octet-stream";
-exports.app = (0, express_1.default)();
+// export const app = express();
 //
 // 함수들
 //
