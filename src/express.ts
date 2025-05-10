@@ -174,7 +174,8 @@ export function proc_all_file(req: Request, res: Response) {
       content_type = ext_type_list[lower];
     }
 
-    const fsize = get_file_size(target_path);
+    let fsize = 0;
+    // fsize = get_file_size(target_path);
     // fs.createReadStream(target_path).pipe(res);
 
     res.send(
