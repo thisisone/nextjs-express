@@ -5,5 +5,9 @@ git add app\ver.tsx
 git commit -m "prod"
 git push
 
-vercel --prod
+cmd /C vercel --prod
 pause
+
+echo ""
+echo "https://unity.sidnft.com"
+echo ""

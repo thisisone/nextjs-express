@@ -17,7 +17,7 @@ app.get("/", proc_dummy);
 app.get("/style.css", proc_dummy);
 app.get("/favicon.ico", proc_dummy);
 app.get("/favicon.png", proc_dummy);
-app.get("/webgl*", proc_dummy);
+app.get("/webgl*", proc_all_file);
 
 // app.get("/api/**", (req, res) => {
 //   console.log("get /abc", req.url);
