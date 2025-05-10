@@ -179,7 +179,7 @@ export function proc_all_file(req: Request, res: Response) {
     // fs.createReadStream(target_path).pipe(res);
 
     res.send(
-      `ok, __dirname=${__dirname}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}, fsize=${fsize}`
+      `ok, __dirname=${__dirname}, root_dir=${root_dir}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}, fsize=${fsize}`
     );
   } catch (err) {
     const e = err as Error;
