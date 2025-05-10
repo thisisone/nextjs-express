@@ -5,14 +5,14 @@ const express = require("express");
 const app = express();
 
 let count = 0;
-app.get("/", (req, res) => {
-  console.log("GET /", req.url);
-  res.send("ok, " + count++);
-});
-// app.get("/", proc_all_file);
-// app.get("/style.css", proc_all_file);
-// app.get("/favicon.ico", proc_all_file);
-// app.get("/favicon.png", proc_all_file);
+// app.get("/", (req, res) => {
+//   console.log("GET /", req.url);
+//   res.send("ok, " + count++);
+// });
+app.get("/", proc_all_file);
+app.get("/style.css", proc_all_file);
+app.get("/favicon.ico", proc_all_file);
+app.get("/favicon.png", proc_all_file);
 // app.get("/webgl*", proc_all_file);
 
 // app.get("/api/**", (req, res) => {
