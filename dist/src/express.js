@@ -134,7 +134,12 @@ function proc_all_file(req, res) {
             comp = "gzip";
             ext = get_ext_before_comp(url, ext);
         }
-        res.send(`ok, __dirname=${__dirname}, target_path=${target_path}, comp=${comp}, ext=${ext}`);
+        var content_type = "";
+        var lower = ext.toLowerCase();
+        if (ext_type_list[lower] !== undefined) {
+            content_type = ext_type_list[lower];
+        }
+        res.send(`ok, __dirname=${__dirname}, target_path=${target_path}, comp=${comp}, ext=${ext}, content_type=${content_type}`);
     }
     catch (err) {
         const e = err;
