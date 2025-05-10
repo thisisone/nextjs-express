@@ -7,6 +7,7 @@ const app = express();
 app.get("/", proc_all_file);
 app.get("/style.css", proc_all_file);
 app.get("/favicon.ico", proc_all_file);
+app.get("/favicon.png", proc_all_file);
 app.get("/webgl*", proc_all_file);
 
 app.get("/api/**", (req, res) => {

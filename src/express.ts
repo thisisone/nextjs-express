@@ -12,11 +12,11 @@ interface MAP_KV {
 
 // variable
 
-let IS_DEV = process.env.IS_DEV;
+// let IS_DEV = process.env.IS_DEV;
 // const MAX_AGE = IS_DEV ? MONTH : 0;
-const MAX_AGE = 0;
-console.log("IS_DEV", IS_DEV);
-console.log("MAX_AGE", MAX_AGE);
+// const MAX_AGE = 0;
+// console.log("IS_DEV", IS_DEV);
+// console.log("MAX_AGE", MAX_AGE);
 
 let root_dir = __dirname;
 
@@ -25,6 +25,9 @@ let root_dir = __dirname;
 const ext_type_list: MAP_KV = {};
 ext_type_list[".html"] = "text/html";
 ext_type_list[".ico"] = "image/vnd.microsoft.icon";
+ext_type_list[".png"] = "image/png";
+ext_type_list[".jpg"] = "image/jpeg";
+ext_type_list[".gif"] = "image/gif";
 ext_type_list[".css"] = "style/css";
 ext_type_list[".json"] = "application/json";
 ext_type_list[".wasm"] = "application/wasm";
