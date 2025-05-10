@@ -161,7 +161,7 @@ function proc_all_file(req, res) {
         console.error(
         //
         "[E] GET " + req.url + " fail", target_path, comp, ext, e.message, e.stack);
-        res.status(500);
+        // res.status(500);
         res.send("GET " + req.url + " fail");
     }
 }

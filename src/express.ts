@@ -200,7 +200,7 @@ export function proc_all_file(req: Request, res: Response) {
       e.stack
     );
 
-    res.status(500);
+    // res.status(500);
     res.send("GET " + req.url + " fail");
   }
 }
