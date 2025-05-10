@@ -118,8 +118,27 @@ function get_ext_before_comp(url: string, comp: string) {
 
 // 테스트용 호출
 export function proc_dummy(req: Request, res: Response) {
-  console.log("GET", req.urk);
+  console.log("GET", req.url);
   res.send(req.url);
+}
+
+//
+export function proc_all_file(req: Request, res: Response) {
+  // console.info("GET start", req.url);
+
+  let target_path = "";
+  let comp = "";
+  let ext = "";
+
+  try {
+    var url = req.url;
+    target_path = req.url;
+
+    res.send(`ok, ${__dirname}, ${url}, ${target_path}`);
+  } catch (err) {
+    const e = err as Error;
+    res.send(`ng, ${e.message}`);
+  }
 }
 
 // public 파일을 단순 전달하는 방법
@@ -128,7 +147,7 @@ export function proc_dummy(req: Request, res: Response) {
 //
 // http://localhost:3002/webgl_mp/index.html
 //
-export function proc_all_file(req: Request, res: Response) {
+export function proc_all_file_old(req: Request, res: Response) {
   console.info("GET start", req.url);
 
   let target_path = "";
@@ -200,7 +219,7 @@ export function proc_all_file(req: Request, res: Response) {
       e.stack
     );
 
-    // res.status(500);
+    res.status(500);
     res.send("GET " + req.url + " fail");
   }
 }

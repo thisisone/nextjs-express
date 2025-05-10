@@ -9,5 +9,6 @@ cmd /C vercel --prod
 pause
 
 echo ""
-echo "https://unity.sidnft.com"
+echo https://unity.sidnft.com
+echo https://unity.sidnft.com/webgl_mp/index.html
 echo ""

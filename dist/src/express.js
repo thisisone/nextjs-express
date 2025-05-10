@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.set_root_dir = set_root_dir;
 exports.proc_dummy = proc_dummy;
 exports.proc_all_file = proc_all_file;
+exports.proc_all_file_old = proc_all_file_old;
 const path = require("path");
 const fs = require("fs");
 const dotenv = require("dotenv");
@@ -99,8 +100,24 @@ function get_ext_before_comp(url, comp) {
 //
 // 테스트용 호출
 function proc_dummy(req, res) {
-    console.log("GET", req.urk);
+    console.log("GET", req.url);
     res.send(req.url);
+}
+//
+function proc_all_file(req, res) {
+    // console.info("GET start", req.url);
+    let target_path = "";
+    let comp = "";
+    let ext = "";
+    try {
+        var url = req.url;
+        target_path = req.url;
+        res.send(`ok, ${__dirname}, ${url}, ${target_path}`);
+    }
+    catch (err) {
+        const e = err;
+        res.send(`ng, ${e.message}`);
+    }
 }
 // public 파일을 단순 전달하는 방법
 // 이걸로는 unity webgl 압축을 사용할 수 없다.
@@ -108,7 +125,7 @@ function proc_dummy(req, res) {
 //
 // http://localhost:3002/webgl_mp/index.html
 //
-function proc_all_file(req, res) {
+function proc_all_file_old(req, res) {
     console.info("GET start", req.url);
     let target_path = "";
     let comp = "";
@@ -161,7 +178,7 @@ function proc_all_file(req, res) {
         console.error(
         //
         "[E] GET " + req.url + " fail", target_path, comp, ext, e.message, e.stack);
-        // res.status(500);
+        res.status(500);
         res.send("GET " + req.url + " fail");
     }
 }
