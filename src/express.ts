@@ -189,42 +189,24 @@ export function proc_all_file(req: Request, res: Response) {
       content_type = ext_type_list[lower];
     }
 
-    let fsize = "";
-    try {
-      var size = get_file_size(target_path);
-      fsize = "OK_" + size;
-    } catch (err2) {
-      const e = err2 as Error;
-      fsize = "NG_" + e.message;
+    if (comp != "") {
+      res.setHeader("Content-Encoding", comp);
     }
 
-    fs.createReadStream(target_path).pipe(res);
+    if (content_type) {
+      res.setHeader("Content-Type", content_type);
+    }
 
-    // console.log("fread");
-    // let fread = "";
-    // try {
-    //   const a = fs.readFileSync(target_path);
-    //   console.log("a", a);
-    //   fread = "ok, " + a.length;
-    // } catch (err2) {
-    //   const e = err2 as Error;
-    //   fread = "ng, " + e.message;
-    // }
-
-    // const p_cmd = process.cwd();
-    // res.send(
-    //   `ok
-    //   , __dirname=${__dirname}
-    //   , root_dir=${root_dir}
-    //   , cmd_dir=${p_cmd}
-    //   , target_path=${target_path}
-    //   , comp=${comp}
-    //   , ext=${ext}
-    //   , content_type=${content_type}
-    //   , fsize=${fsize}
-    //   , fread=${fread}
+    // console.log(
+    //   `ok,
+    //   target_path: ${target_path},
+    //   ext: ${ext},
+    //   comp: ${comp},
+    //   content_type: ${content_type},
     //   `
     // );
+
+    fs.createReadStream(target_path).pipe(res);
   } catch (err) {
     const e = err as Error;
     res.send(`ng, ${e.message}`);
