@@ -134,7 +134,37 @@ export function proc_all_file(req: Request, res: Response) {
     var url = req.url;
     target_path = req.url;
 
-    res.send(`ok, ${__dirname}, ${url}, ${target_path}`);
+    if (target_path == "/") {
+      url = "/index.html";
+      target_path = path.join(
+        //
+        root_dir,
+        "public",
+        "index.html"
+      );
+    } else {
+      const arr = path_split(target_path);
+      target_path = path.join(
+        //
+        root_dir,
+        "public",
+        ...arr
+      );
+    }
+
+    ext = get_ext(url);
+    comp = "";
+    if (ext == ".br") {
+      comp = "br";
+      ext = get_ext_before_comp(url, ext);
+    } else if (ext == ".gz") {
+      comp = "gzip";
+      ext = get_ext_before_comp(url, ext);
+    }
+
+    res.send(
+      `ok, __dirname=${__dirname}, target_path=${target_path}, comp=${comp}, ext=${ext}`
+    );
   } catch (err) {
     const e = err as Error;
     res.send(`ng, ${e.message}`);
