@@ -8,7 +8,8 @@
     "build": "echo \"ok\"",
     "tsc": "tsc",
     "start": "node index",
-    "serve": "node index"
+    "serve": "node index",
+    "tw": "npx @tailwindcss/cli -i ./public/tailwind.css -o ./public/style.css --watch"
   },
   "keywords": [],
   "author": "",

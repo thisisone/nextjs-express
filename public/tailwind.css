@@ -3,6 +3,12 @@
 body {
   @apply bg-black text-white border-gray-800;
 }
+main {
+  @apply flex justify-center;
+}
+.tw_main {
+  @apply w-full md:w-2/3 lg:w-1/2;
+}
 h1 {
   @apply text-4xl m-4;
 }
@@ -20,12 +26,15 @@ footer {
 }
 
 .tw_section {
-  @apply m-4 flex;
+  @apply m-4 flex-none md:flex;
+}
+.tw_section_1 {
+  @apply flex justify-center;
 }
 .tw_icon {
-  @apply w-48 h-48 rounded-2xl border-2;
+  @apply w-48 rounded-2xl border-2;
 }
-.tw_icon_desc {
+.tw_section_2 {
   @apply ml-4;
 }
 .tw_button {
