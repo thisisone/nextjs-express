@@ -139,4 +139,6 @@ out
 test.*
 .vercel
 #*.bat
-
+.ver
+ver.js
+prod.bat
