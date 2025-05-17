@@ -206,7 +206,13 @@ export function proc_all_file(req: Request, res: Response) {
     //   `
     // );
 
-    fs.createReadStream(target_path).pipe(res);
+    fs.createReadStream(target_path)
+      // BUG_250517
+      .on("error", (err: Error) => {
+        console.error("createReadStream fail", err.message);
+        res.status(500).send("read file fail, " + target_path);
+      })
+      .pipe(res);
   } catch (err) {
     const e = err as Error;
     res.send(`ng, ${e.message}`);
@@ -276,7 +282,13 @@ export function proc_all_file_old(req: Request, res: Response) {
     }
 
     // 바이너리 전송은 이 방식으로 해야한다.
-    fs.createReadStream(target_path).pipe(res);
+    fs.createReadStream(target_path)
+      // BUG_250517
+      .on("error", (err: Error) => {
+        console.error("createReadStream fail", err.message);
+        res.status(500).send("read file fail, " + target_path);
+      })
+      .pipe(res);
 
     // console.log("OK", target_path, content_type, comp);
   } catch (err) {

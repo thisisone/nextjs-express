@@ -1,9 +1,20 @@
 @echo off
 
 node ver.js
+if %ERRORLEVEL% EQU 0 (
+    echo VER OK
+) else (
+    echo VER NG
+    exit %ERRORLEVEL%
+)
 
 cmd /C npm run tsc
-pause
+if %ERRORLEVEL% EQU 0 (
+    echo BUILD OK
+) else (
+    echo BUILD NG
+    exit %ERRORLEVEL%
+)
 
 rem git add .ver
 rem git add app\ver.tsx

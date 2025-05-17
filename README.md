@@ -109,3 +109,10 @@ ok, __dirname=/var/task/dist/src, root_dir=/var/task, target_path=/var/task/publ
 ok, fpath=/var/task/public/webgl_mp/index.html
 
 ```
+
+# 수정사항
+
+## BUG_250517 / 2025-05-17 버그 수정
+
+fs.createReadStream 에 on("error", ~~~) 예외처리 추가
+설명: https://serverdown.tistory.com/1225
