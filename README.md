@@ -6,7 +6,7 @@ https://github.com/thisisone/nextjs-express
 유니티 webgl 압축 설명 문서
 https://docs.unity3d.com/kr/2021.3/Manual/webgl-deploying.html
 
-# ercel 로 express 서버를 배포해보자 / 유니티 webgl 압축 지원하는 페이지를 배포 가능
+# vercel 로 express 서버를 배포해보자 / 유니티 webgl 압축 지원하는 페이지를 배포 가능
 
 블로그 링크:
 https://blog.sidnft.com/1225
@@ -14,32 +14,33 @@ https://blog.sidnft.com/1225
 - 따라하기 영상 있음
 - 후기 있음
 
-# 게임 홍보를 위한 유니티 webgl 페이지 만들기 / 홍보의 거리 v2 / street for promotion V2
-
-블로그 링크:
-https://blog.sidnft.com/1260
-
-- 버전업 개발 일지 있음
-- 결과물 데모: https://unity.sidnft.com
-
 # 명령어
 
 ```
-bun dev.ts
+npm run serve
 ```
 
 typescript 파일을 직접 실행하는게 개발에 할때 편해서 bun 을 사용했습니다. 어떤식으로든 dev.ts 를 실행하면 됩니다.
 
 파일은 ./src/express.ts 를 변집합니다.
 
+# 빌드 하기
+
 ```
 npm run build
 ```
 
-배포 전엔 빌드하여 javscript 파일을 만드세요.
+원소스는 typescript 로 만들었습니다.
+javascript 변환이 필요하니 빌드해야합니다.
+
+빨리 개발하실 분은 bun 같은걸 이용해서 ts 파일을 바로 실행하세요
+
+배포전엔 빌드해서 올려야합니다.
+
+# 개발 버전 실행 명령어
 
 ```
-npm run start
+npm run serve
 ```
 
 이 명령어는 index.js 를 실행합니다.
@@ -49,26 +50,17 @@ npm run start
 vercel deploy
 ```
 
-프리뷰로 배포한다.
-관리자만 볼 수 있다.
+이 명령어는 프리뷰로 배포하는 것입니다.
+관리자만 볼 수 있고 공개용이 아닙니다.
 
-처음에 이걸로 배포 되는줄 알고 시간을 기다렸는데
-배포가 안되어서 시간남이가 많이 발생했었다
-
-사용할 일은 없었음
+처음에 이걸 몰라서 왜안되지하며 시간을 많이 낭비했습니다.
 
 ```
 vercel --prod
 ```
 
-프로덕션 배포한다.
-모두에게 보여지게 된다.
-
-```
-deply.bat
-```
-
-배치파일을 만들어서 실행하면 편했습니다.
+프로덕션 배포 명령어 입니다.
+이 명령을 넣으면 공개되는 것입니다.
 
 # 각종 문제해결
 
@@ -80,7 +72,7 @@ vercel.json 에 builds 를 build 로 오타를 냈더니 동작하지 않았다.
 index.js 마지막에 `mobile.exports = app`
 꼭 있어야한다.
 
-# 추가작업 tailwind 동작하는 .html 빌드하기
+# 추가작업 tailwind 적용된 .html 만들기
 
 단순히 html 파일을 작성하니까 모양이 나지 않았다.
 그래서 tailwind 를 작용한 페이지를 html 파일로 만들 것이다.
