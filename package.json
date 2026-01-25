@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"ok\"",
-    "tsc": "tsc",
+    "build": "tsc",
     "start": "node index",
     "serve": "node index",
     "tw": "npx @tailwindcss/cli -i ./public/tailwind.css -o ./public/style.css --watch"
