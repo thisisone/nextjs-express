@@ -12,10 +12,10 @@ if (process.env.PORT) {
 // console.log("PORT", PORT);
 
 app.listen(PORT, () => {
-  console.log("express listen");
+  console.log("express listen", PORT);
   console.log(`http://localhost:${PORT}/`);
   console.log(`https://unity.sidnft.com`);
-  console.log(`https://unity.sidnft.com/webgl_mp/index.html`);
+  // console.log(`https://unity.sidnft.com/webgl_mp/index.html`);
 });
 
 module.exports = app;
